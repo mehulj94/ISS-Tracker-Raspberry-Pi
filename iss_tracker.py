@@ -1,17 +1,30 @@
 import tweepy
-import re
-import codecs
 import datetime
+import iss_tracker_file_gen
 
+ckey = ''		#Consumer Key from Twitter
+csecret = ''	#Consumer secret from Twitter
+atoken = ''		#Access Key from Twitter
+asecret = ''	#Access secret from Twitter
 
-ckey = "5GwwKpM2NvzXCpfn28saSk3CN"
-csecret = 'F7UKxhJLNyprK5mNV5bKSiNogvuLJ4X6klfF7LVhwHCRCAUMVk'
-atoken = '3145110713-G9HFvOkdf1c7BzmK7IaJTm048DVD3TvgUM20zdb'
-asecret = 'VFcZ1whomwbl4IojkIf3krC6u71m7qMyh7Nm69wfjYUFK'
-count = 0
+ISS_data = iss_tracker_file_gen.iss_date_tweet_dict
 
-auth = tweepy.OAuthHandler(ckey,csecret)
-auth.set_access_token(atoken,asecret)
-api = tweepy.API(auth)
+First_Key = ISS_data.iterkeys().next()
+Next_Iss_visit = datetime.datetime.strptime(First_Key , '%Y-%m-%d').date()
+Today = datetime.date.today()
 
-api.update_status()
+time_to_iss_visit = abs(Next_Iss_visit - Today)
+days = time_to_iss_visit.days
+
+if days < 2:
+	auth = tweepy.OAuthHandler(ckey,csecret)
+	auth.set_access_token(atoken,asecret)
+	api = tweepy.API(auth)
+	
+	api.update_status(status = ISS_data.itervalues().next().encode('ascii','ignore'))
+	#print ISS_data.itervalues().next().encode('ascii','ignore')
+	
+# else:
+	# print 'Days left for Iss visit is: '+ str(days)
+	# print ISS_data
+#Uncomment above if you want to see output on command line
