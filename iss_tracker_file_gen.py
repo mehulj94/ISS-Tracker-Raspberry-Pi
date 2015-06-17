@@ -26,13 +26,11 @@ for entry in iss_desc:
 	loc_time = entry.find("Time")
 	loc_duration = entry.find("Duration")
 	
-	#print "The International Space Station is passing overhead on " + entry[:loc_time] + "at "+ entry[loc_time+6:loc_duration] + "for" + entry[loc_duration+9:loc_maxm-1] + ". #Hyderabad"
 	tweet_date = str(datetime.datetime.strptime(entry[:loc_time], "%A %b %d, %Y ").date())
 	
 	iss_date_tweet_dict[tweet_date] = "The International Space Station is passing overhead on " + entry[:loc_time] + "at "+ entry[loc_time+6:loc_duration] + "for" + entry[loc_duration+9:loc_maxm-1] + ". #Hyderabad"
 
-print iss_date_tweet_dict
-
-save_iss_dates = open('iss_overhead_pass.txt','w')
-save_iss_dates.write(str(iss_date_tweet_dict))
-save_iss_dates.close()
+#IGNORE THIS!
+# save_iss_dates = open('iss_overhead_pass.py','w')
+# save_iss_dates.write(str(iss_date_tweet_dict))
+# save_iss_dates.close()
